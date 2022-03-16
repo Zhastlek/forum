@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <title>MyProfil</title>
+</head>
+<body>
+    {{template "header" .}}
+
+    {{template "navbar" .}}
+    <nav>
+        SECTIONS:   
+        <a href="/profile/my-posts">my-posts</a>
+        <a href="/profile/my-comments">my-comments</a>
+        <a href="/profile/my-likes">my-likes</a>
+    </nav>
+
+
+
+
+
+
+    {{$Session := .Session}}
+    {{$MyPost := .MyPost}}
+    {{$MyComment := .MyComment}}
+    {{$MyReaction := .MyReaction}}
+    {{$ValueReaction := .LikeOrDislike}}
+    
+        <div class="allContent">
+            {{range .Posts}}
+            <table>
+                <tr>
+                    <th>TITLE POST</th>
+                    <th>BODY</th>
+                    <th>AUTHOR</th>
+                    <th>CREATED</th>
+                    <th>ID</th>
+                    <th>REACTION</th>
+                </tr>
+                
+                <tr>
+                    <td><a href="/posts/{{.Id}}"><button name="id" value="{{.Id}}"><h3>{{.Title}}</h3></button></a></td>
+                    <td>{{.Body}}</td>
+                    <td>{{.AuthorName}}</td>
+                    <td>{{.Date}}</td>
+                    <td>#{{.Id}}</td>
+                    <td>
+                        <form action="/posts/{{.Id}}" method="post">
+                            <input type="hidden" name="post-id" value="{{.Id}}">
+                            <input type="hidden" name="_method" value="like-post">
+                            <button name="reaction" value="like">like</button>
+                            {{.Likes.Like}}
+                            <button name="reaction" value="dislike">dislike</button>
+                            {{.Likes.DisLike}}
+                        </form>
+                    </td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th>COMMENTS:</th>
+                    <th>AUTHOR</th>
+                    <th>CREATED</th>
+                    <th>COMMENT ID</th>
+                    <th>REACTION</th>
+                    <th>DELETE MY COMMENT</th>
+                </tr>
+                
+                {{range .Comments}}
+                <tr>
+                    <td>{{.Body}}</td>
+                    <td>{{.AuthorName}}</td>
+                    <td>{{.Date}}</td>
+                    <td>#{{.Id}}</td>
+                    <td>
+                        <form action="/posts/{{.PostId}}" method="post">
+                            <input type="hidden" name="comment-id" value="{{.Id}}">
+                            <input type="hidden" name="_method" value="like-comment">
+                            <button name="reaction" value="like">like</button>
+                            {{.Likes.Like}}
+                            <button name="reaction" value="dislike">dislike</button>
+                            {{.Likes.DisLike}}
+                        </form>
+                    </td>
+                    <td>                
+                        {{if .MyComment}}                
+                        <form action="/posts/{{.PostId}}" method="post">
+                            <input type="hidden" name="comment" value="{{.Body}}">
+                            <input type="hidden" name="post-id" value="{{.PostId}}">
+                            <input type="hidden" name="_method" value="delete-comment">
+                            <input type="submit" value="DELETE COMMENT">
+                        </form>
+                        {{end}}
+                    </td>
+                </tr>
+            {{end}}
+        </table>
+            {{end}}
+    </div>
+</body>
+</html>

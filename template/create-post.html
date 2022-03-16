@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700'>
+    <title>Create Post</title>
+</head>
+<body>
+    <div id="mainPage">
+        <header>
+            {{template "header" .}}
+        </header>
+
+        {{template "navbar" .}}
+
+
+        {{if .Session}}
+        <div class="create-post">
+            <form method="post">
+                <div>
+                    <input type="text" name="title" required placeholder="Title">
+                </div>
+                <div>
+                    <input type="text" name="bodyPost" required placeholder="text">
+                </div>
+                CHOOSE CATEGORY:
+                <nav>
+                    <!-- <div style="display: flex;"> -->
+                        {{range .Categories}}
+                        <input type="checkbox" name="category" value="{{.Id}}" style="margin-left: 50px;">{{.Name}}
+                        {{end}}
+                    <!-- </div> -->
+                </nav>
+                    <input type="submit" value="create">   
+            </form>
+        </div>
+        {{else}}
+        <input type="text" name="body" placeholder="text">
+        {{end}}
+    
+    </div>
+</body>
+</html>

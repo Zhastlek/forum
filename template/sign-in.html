@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700'>
+    <title>sign-in</title>
+</head>
+<body>
+    {{template "header" .}}
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+        <!-- Tabs Titles -->
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+        </div>
+    
+        <!-- Login Form -->
+        <form method="post">
+            {{ if .Error }}
+            <p>Wrong login or password</p>
+            {{end}}
+            <input type="text" id="UserLogin" class="fadeIn second" name="email" placeholder="login" required>
+            <input type="password" id="UserPassword" class="fadeIn third" name="password" placeholder="password" required>
+            <input type="submit" class="fadeIn fourth" value="sign-in">
+        </form>
+            <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <a class="underlineHover" href="#">Forgot Password?</a>
+        </div>
+        </div>
+    </div>
+</body>
+</html>

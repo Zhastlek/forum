@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    {{define "header"}}
+    <header class="head">
+            <h1><a href="/">FORUM</a></h1>
+
+            {{if .Session }}
+            <a href="/create-post">   CREATE POST   </a>
+            <a href="/profile">   PROFILE  </a>
+            <a href="/logout">    LOGOUT   </a>
+
+            {{else}}
+                <a href="/sign-in"> signin</a>
+                <a href="/sign-up"> signup</a>
+            {{end}}
+
+    </header>
+    {{end}}
+
+</body>
+</html>

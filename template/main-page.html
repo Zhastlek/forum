@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700'>
+    <title>Forum</title>
+</head>
+<body>
+
+        <header>
+            {{template "header" .}}
+        </header>
+
+            {{template "navbar" .}}
+
+            
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Body</th>
+                <th>Author</th>
+                <th>Created</th>
+                <th>ID</th>
+            </tr>
+            {{range .Posts}}
+            <form action="/posts/{{.Id}}" method="get">
+            <tr>
+                <td><a href="/posts/{{.Id}}"><button name="id" value="{{.Id}}"><h3>{{.Title}}</h3></button></a></td>
+                <td>{{.Body}}</td>
+                <td>{{.AuthorName}}</td>
+                <td>{{.Date}}</td>
+                <td>#{{.Id}}</td>
+            </tr>
+            </form>
+            {{end}}
+        </table>
+        <footer>The project forum was created in a programming language: <strong>Golang</strong></footer>
+        <script src="/assets/js/navbar.js" type="text/javascript"></script>
+
+</body>
+</html>
