@@ -73,7 +73,7 @@ func (h *handlerPost) GetAll(w http.ResponseWriter, r *http.Request) {
 		api.PrintWebError(w, 500)
 		return
 	}
-	sessionStatus, err := h.CheckSession(r)
+	sessionStatus, err := h.CheckSession(w, r)
 	if err != nil {
 		log.Printf("ERROR handler post GetAll method Check Session function %v\n", err)
 		sessionStatus = false
@@ -149,7 +149,7 @@ func (h *handlerPost) SortedByCategory(w http.ResponseWriter, r *http.Request) {
 	// 	fmt.Println("result sorted:-->>>>>", val.Title, val.Body, val.CategoryId)
 	// }
 
-	sessionStatus, err := h.CheckSession(r)
+	sessionStatus, err := h.CheckSession(w, r)
 	if err != nil {
 		log.Printf("ERROR handler post GetAll method Check Session function %v\n", err)
 	}
@@ -167,7 +167,7 @@ func (h *handlerPost) SortedByCategory(w http.ResponseWriter, r *http.Request) {
 	// log.Println("PRIEHALI SortedByCategory")
 }
 
-func (h *handlerPost) CheckSession(r *http.Request) (bool, error) {
+func (h *handlerPost) CheckSession(w http.ResponseWriter, r *http.Request) (bool, error) {
 	session, err := r.Cookie("session")
 	if err != nil {
 		log.Printf("This user is not registered(CheckSession method Handler Post):-->%v\n", err)
@@ -184,6 +184,7 @@ func (h *handlerPost) CheckSession(r *http.Request) (bool, error) {
 	}
 
 	if err = h.sessionService.Check(h.ctx, SessionDto); err != nil {
+		h.DeleteSession(w, r)
 		return false, err
 	}
 
@@ -231,3 +232,29 @@ func (h *handlerPost) Logout(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (h *handlerPost) DeleteSession(w http.ResponseWriter, r *http.Request) {
+	_, err := r.Cookie("session")
+	if err != nil {
+		log.Println("This user is not registered")
+		api.PrintWebError(w, 400)
+		return
+	}
+	_, err = r.Cookie("My-uuid")
+	if err != nil {
+		log.Println("This user is not registered")
+		api.PrintWebError(w, 400)
+		return
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:    "session",
+		MaxAge:  -1,
+		Expires: time.Unix(0, 0),
+	})
+	http.SetCookie(w, &http.Cookie{
+		Name:    "My-uuid",
+		MaxAge:  -1,
+		Expires: time.Unix(0, 0),
+	})
+	http.Redirect(w, r, "/", 303)
+}

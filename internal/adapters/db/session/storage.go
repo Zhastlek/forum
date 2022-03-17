@@ -41,8 +41,10 @@ func (ss *sessionStorage) Check(ctx context.Context, session *model.SessionDto) 
 		ORDER BY id DESC`, session.MyUUID, session.Value)
 	if err != nil {
 		log.Printf("ERROR Session STORAGE QUERY ERROR :--->%v\n", err)
+		log.Println("------------------------>", err)
 		return err
 	}
+
 	defer rows.Close()
 	sessions := []*model.Session{}
 
@@ -52,6 +54,7 @@ func (ss *sessionStorage) Check(ctx context.Context, session *model.SessionDto) 
 		if err != nil {
 			if err == sql.ErrNoRows {
 				log.Printf("ERROR Session STORAGE QUERY NO ROWS SCAN method :--->%v\n", err)
+				log.Println("SESSION------------------------>", err)
 				// break
 				return err
 			}
@@ -65,8 +68,10 @@ func (ss *sessionStorage) Check(ctx context.Context, session *model.SessionDto) 
 	}
 	if len(sessions) == 0 {
 		err := errors.New("there is no such entry")
+		log.Println("SESSION-------33----------------->", err)
 		return err
 	}
+	log.Println("SESSION--------------44---------->", err)
 	log.Println("END CHECK SESSION STORAGE METHOD ------->")
 	return nil
 }

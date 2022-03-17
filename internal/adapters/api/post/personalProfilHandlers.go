@@ -20,7 +20,7 @@ func (h *handlerPost) ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		api.PrintWebError(w, 500)
 		return
 	}
-	sessionStatus, err := h.CheckSession(r)
+	sessionStatus, err := h.CheckSession(w, r)
 	if err != nil {
 		log.Printf("ERROR post handler ProfileHandler method Check Session function %v\n", err)
 		api.PrintWebError(w, 403)
@@ -52,7 +52,7 @@ func (h *handlerPost) MyPostsHandler(w http.ResponseWriter, r *http.Request) {
 		api.PrintWebError(w, 500)
 		return
 	}
-	sessionStatus, err := h.CheckSession(r)
+	sessionStatus, err := h.CheckSession(w, r)
 	if err != nil {
 		log.Printf("ERROR post handler ProfileHandler method Check Session function %v\n", err)
 		api.PrintWebError(w, 403)
@@ -123,7 +123,7 @@ func (h *handlerPost) MyCommentsHandler(w http.ResponseWriter, r *http.Request) 
 		api.PrintWebError(w, 500)
 		return
 	}
-	sessionStatus, err := h.CheckSession(r)
+	sessionStatus, err := h.CheckSession(w, r)
 	if err != nil {
 		log.Printf("ERROR (MyCommentsHandler) post handler ProfileHandler method Check Session function %v\n", err)
 		api.PrintWebError(w, 403)
@@ -194,7 +194,7 @@ func (h *handlerPost) MyLikesHandler(w http.ResponseWriter, r *http.Request) {
 		api.PrintWebError(w, 500)
 		return
 	}
-	sessionStatus, err := h.CheckSession(r)
+	sessionStatus, err := h.CheckSession(w, r)
 	if err != nil {
 		log.Printf("ERROR post handler (MyLikesHandler) ProfileHandler method Check Session function %v\n", err)
 		api.PrintWebError(w, 403)

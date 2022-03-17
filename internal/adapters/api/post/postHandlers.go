@@ -67,7 +67,7 @@ func (h *handlerPost) GetOnePostById(w http.ResponseWriter, r *http.Request) {
 		api.PrintWebError(w, 400)
 		return
 	}
-	sessionStatus, err := h.CheckSession(r)
+	sessionStatus, err := h.CheckSession(w, r)
 	if err != nil {
 		log.Printf("ERROR handler post GetOnePost method Check Session function %v\n", err)
 	}
@@ -163,7 +163,7 @@ func (h *handlerPost) GetCreatePost(w http.ResponseWriter, r *http.Request) {
 		api.PrintWebError(w, 500)
 		return
 	}
-	sessionStatus, err := h.CheckSession(r)
+	sessionStatus, err := h.CheckSession(w, r)
 	if err != nil {
 		log.Printf("ERROR handler post GetCreatePost method Check Session function %v\n", err)
 		api.PrintWebError(w, 403)
@@ -267,7 +267,7 @@ func (h *handlerPost) PostCreatePost(w http.ResponseWriter, r *http.Request) {
 		api.PrintWebError(w, 500)
 		return
 	}
-	sessionStatus, err := h.CheckSession(r)
+	sessionStatus, err := h.CheckSession(w, r)
 	if err != nil {
 		log.Printf("ERROR handler post GetAll method Check Session function %v\n", err)
 		api.PrintWebError(w, 400)
